@@ -14,7 +14,8 @@ columnHeights = [rows,rows,rows,rows,rows,rows,rows]
 #start the game with zero turns played
 numTurns = 0
 #win-checking definitions
-h_v_indices = range(4) #row/column starting indices in which a horizontal or vertical victory is possible
+row_indices = range(4) #row starting indices in which a horizontal victory is possible (columns 1-4)
+col_indices = range(3) #column starting indices in which a vertical victory is possible (rows 1-3)
 win_rows = range(rows) #rows in which a horizontal victory is possible (all of them)
 win_cols = range(cols) #columns in which a vertical victory is possible (all of them)
 
@@ -73,9 +74,21 @@ while True:
     #check to see if somebody wins
     #horizontal first
     for i in win_rows:
-        for j in h_v_indices:
+        for j in row_indices:       #scan row indices where victory is possible (columns 1-4)
+            chunk = range(j,j+4)    #create 4-index chunk
+            slot = board[i,chunk]   #create "victory slot" from chunk indices
+            if all(x == playerID for x in slot):            #check if all values in slot are one player's pieces
+                print("Player {} wins!".format(player))
+                quit()
+            else:
+                j += 1              #if no victory, move to next column where victory is possible
+        i += 1                      #if no victory, move to the next row
+    #vertical next
+    #functions the same as horizontal victory loop, but rows & columns are switched
+    for i in win_cols:
+        for j in col_indices:       #scan column indices where victory is possible (rows 1-3)
             chunk = range(j,j+4)
-            slot = board[i,chunk]
+            slot = board[chunk,i]
             if all(x == playerID for x in slot):
                 print("Player {} wins!".format(player))
                 quit()
