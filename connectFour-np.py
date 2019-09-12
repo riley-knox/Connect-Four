@@ -43,6 +43,11 @@ while True:
         if play < 1 or play > 7:
             print('Enter an integer from 1 to 7!')
         else:
+            pass
+        #check to make sure the column has an empty space
+        if columnHeights[play-1] == 0:
+            print("That column is full! Pick another.")
+        else:
             break
 
     #determine positioning of play
@@ -57,6 +62,7 @@ while True:
 
     #update the column heights
     columnHeights[playCol] = columnHeights[playCol]-1
+    print(columnHeights)
 
     #update the number of turns
     numTurns += 1
