@@ -57,12 +57,14 @@ while True:
     #place player's color in lowest open column space
     board[playRow,playCol] = playerID
 
-    #display the new board
-    print(board)
-
     #update the column heights
     columnHeights[playCol] = columnHeights[playCol]-1
     print(columnHeights)
 
     #update the number of turns
     numTurns += 1
+
+    #display the new board
+    print(board)
+
+    
