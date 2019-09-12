@@ -13,6 +13,10 @@ cols = 7
 columnHeights = [rows,rows,rows,rows,rows,rows,rows]
 #start the game with zero turns played
 numTurns = 0
+#win-checking definitions
+h_v_indices = range(4) #row/column starting indices in which a horizontal or vertical victory is possible
+win_rows = range(rows) #rows in which a horizontal victory is possible (all of them)
+win_cols = range(cols) #columns in which a vertical victory is possible (all of them)
 
 #create board as 6x7 zeros array
 board = np.chararray((rows,cols))
@@ -59,7 +63,6 @@ while True:
 
     #update the column heights
     columnHeights[playCol] = columnHeights[playCol]-1
-    print(columnHeights)
 
     #update the number of turns
     numTurns += 1
@@ -67,4 +70,15 @@ while True:
     #display the new board
     print(board)
 
-    
+    #check to see if somebody wins
+    #horizontal first
+    for i in win_rows:
+        for j in h_v_indices:
+            chunk = range(j,j+4)
+            slot = board[i,chunk]
+            if all(x == playerID for x in slot):
+                print("Player {} wins!".format(player))
+                quit()
+            else:
+                j += 1
+        i += 1
